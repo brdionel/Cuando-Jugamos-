@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month:hover, .ant-fullcalendar-fullscreen .ant-fullcalendar-date:hover {
+  background: #fff!important;
+  cursor: auto!important;
+}
+
+.ant-fullcalendar-fullscreen .ant-fullcalendar-month:active, .ant-fullcalendar-fullscreen .ant-fullcalendar-date:active {
+  background: #fff!important;
+}

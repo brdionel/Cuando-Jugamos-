@@ -18,3 +18,9 @@
 .notes-month section {
   font-size: 28px;
 }
+
+.wrapperCalendar {
+  min-width: 1000px;
+  margin: 0 auto;
+  border: 1px solid #000000
+}

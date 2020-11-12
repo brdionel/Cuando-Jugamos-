@@ -1,0 +1,11 @@
+.wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: .3em;
+    cursor: pointer;
+}
+
+.wrapper:hover{
+    transform: scale(1.1);
+}

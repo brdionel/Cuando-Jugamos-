@@ -1,17 +1,14 @@
 
-import React, { useEffect } from 'react';
-import { Badge } from 'antd';
-import { connect } from 'react-redux';
-import { READ_REMINDERS } from '../../redux/ActionTypes';
+import styles from './Day.module.css';
+import React from 'react';
+import { Avatar, Image } from 'antd';
 import moment from 'moment';
 import { Spin, Icon } from 'antd';
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
-
-
 const remindersOnDay = (reminders, currentDay) => {
     const isDay = (item, currentDay) => {
-        const date = moment(item.date);
+        const date = moment(item.fecha);
         if (date.format('DD') === currentDay.format('DD')
             && (date.format('MM') === currentDay.format('MM'))
             && (date.format('YYYY') === currentDay.format('YYYY'))
@@ -29,13 +26,19 @@ const Day = ({ reminders, currentDay, loading }) => {
 
     const RemindersOnDay = remindersOnDay(reminders, currentDay);
 
+    const handleClick = (item) =>{
+        alert(item.localNome + ' contra ' + item.visitanteNome)
+    }
+
     return (
-        !loading ? <ul className="events">
+        !loading ? <ul className="events p-0">
             {RemindersOnDay.map(item => (
 
-                <li key={item.reminder}>
-                    <Badge color={item.color} text={item.reminder} />
-                </li>
+                <div key={item.id} className={styles.wrapper} onClick = {() => handleClick(item)}>
+<                    Avatar src={item.localAvatar} />
+                    <span> - </span>
+                    <Avatar src={item.visitanteAvatar} />
+                </div>
             ))}
         </ul> 
         : <Spin indicator={antIcon} />

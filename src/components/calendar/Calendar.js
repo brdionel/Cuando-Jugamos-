@@ -3,23 +3,44 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Calendar, } from 'antd';
 import Month from './Month';
-import Day from './Day'
-import { READ_REMINDERS} from '../../redux/ActionTypes';
+import Day from './Day';
+import ReminderForm from '../ReminderForm';
+import { readReminders, createReminder, updateNextJogo } from '../../store/actions'
 
-const MyCalendar = ({ readReminders, reminderState , createReminder}) => {
+const MyCalendar = ({ readReminders, state , createReminder, updateNextJogo}) => {
 
     // triggers
     useEffect(() => { readReminders() }, []);
 
+    useEffect(() => {
+        if(state.reminders.length > 0){
+            console.log('ahora hay reminders cargados!' + JSON.stringify(state.reminders))
+            nextJogo()
+
+        }
+    }, [state.reminders])
+
+    const nextJogo = () => {
+        const hoje = moment()
+        const next = state.reminders.find(remin => {
+            if(moment(remin.fecha) >= hoje ) return remin
+        })
+
+        if(next) updateNextJogo(next)
+
+        console.log('el juego siguiente es :'+ JSON.stringify(next))
+    }
+
     // constants
  
+    const [date, setDate] = useState(moment(new Date, 'yyyy-mm-dd'))
 
     // functions
         const DayToFn = (day) => {
             return (
                 <Day
-                    loading={reminderState.loading}
-                    reminders={reminderState.reminders}
+                    loading={state.loading}
+                    reminders={state.reminders}
                     currentDay={day}>
                 </Day>
             );
@@ -27,13 +48,29 @@ const MyCalendar = ({ readReminders, reminderState , createReminder}) => {
         //HandleSelectDate
 
 
-
-
-
     //COMPONENTE
     return (
         <>
+            <div className = "container">
+                <div className = "row">
+                    <div className='col-sm-12 col-lg-6'>
+                        {state.creating
+                            ? (<ReminderForm 
+                                handleSubmit = {createReminder}
+                                date = {date}
+                                setDate = { setDate }
+                            />)
+                            : null
+                        }
+                    </div>
+                </div>   
+
+            </div>
+
             <Calendar
+                value = {date}
+                onSelect = {setDate}
+
                 dateCellRender={DayToFn}
                 monthCellRender={Month}
             />
@@ -45,14 +82,17 @@ const MyCalendar = ({ readReminders, reminderState , createReminder}) => {
 
 
 
-const mapStateToProps = ({ reminderState }) => {
+const mapStateToProps = (state) => {
+    console.log(state)
     return {
-        reminderState
+        state
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        readReminders: () => dispatch({ type: READ_REMINDERS }),
+        readReminders: () => dispatch(readReminders()),
+        createReminder: (payload) => dispatch(createReminder(payload)),
+        updateNextJogo: (payload) => dispatch(updateNextJogo(payload))
     }
 }
 
