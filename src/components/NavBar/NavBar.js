@@ -3,7 +3,7 @@ import React from 'react';
 import { loadCreateReminder } from '../../store/actions';
 import { connect } from 'react-redux';
 
-const NavBar = ({loadCreateReminder}) => {
+const NavBar = ({loadCreateReminder, state}) => {
 
     const handleClick = () => {
         loadCreateReminder()
@@ -12,17 +12,27 @@ const NavBar = ({loadCreateReminder}) => {
     return(
         <nav className="navbar navbar-dark bg-primary p-3">
             <div className = "container">
-                <a className="navbar-brand">Cuando Jugamos?</a>
-                <button 
-                    className="btn btn-light my-2 my-sm-0" 
-                    title='Crear recordatorio'
-                    onClick = {handleClick}>
-                    +
-                </button>
+                <a href='!#' className="navbar-brand">Cuando Jugamos?</a>
+                { !state.creating
+                    ? (<button 
+                        className="btn btn-light my-2 my-sm-0" 
+                        title='Crear recordatorio'
+                        onClick = {handleClick}>
+                        +
+                    </button>)
+                    : null
+                    
+                }
 
             </div>
         </nav>
     )
+}
+
+const mapStateToProps = (state) => {
+    return {
+        state
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -31,4 +41,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

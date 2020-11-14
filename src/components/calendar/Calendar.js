@@ -5,12 +5,15 @@ import { Calendar, } from 'antd';
 import Month from './Month';
 import Day from './Day';
 import ReminderForm from '../ReminderForm';
-import { readReminders, createReminder, updateNextJogo } from '../../store/actions'
+import { readReminders, createReminder, updateNextJogo, readJogos } from '../../store/actions'
 
-const MyCalendar = ({ readReminders, state , createReminder, updateNextJogo}) => {
+const MyCalendar = ({ readReminders, state , createReminder, updateNextJogo, readJogos }) => {
 
     // triggers
-    useEffect(() => { readReminders() }, []);
+    useEffect(() => { 
+        readReminders()
+        readJogos() 
+    }, []);
 
     useEffect(() => {
         if(state.reminders.length > 0){
@@ -92,7 +95,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         readReminders: () => dispatch(readReminders()),
         createReminder: (payload) => dispatch(createReminder(payload)),
-        updateNextJogo: (payload) => dispatch(updateNextJogo(payload))
+        updateNextJogo: (payload) => dispatch(updateNextJogo(payload)),
+        readJogos: () => dispatch(readJogos())
     }
 }
 

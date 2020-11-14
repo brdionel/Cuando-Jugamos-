@@ -1,6 +1,7 @@
 import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS,
      CREATE_REMINDER_ERROR, READ_REMINDERS, READ_REMINDERS_ERROR, 
-     READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, UPDATE_NEXT_JOGO} from '../types';
+     READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, UPDATE_NEXT_JOGO, READ_JOGOS_SUCCESS,
+     READ_JOGOS_ERROR} from '../types';
     
 import axios from 'axios';
 
@@ -37,18 +38,19 @@ const reminders = [
 ]
 
 
-export function readReminders() {
+
+export function readJogos() {
     return async function(dispatch){
         try{
             const response = await axios.get('http://localhost:8000/jogos');
             dispatch({
-                type: READ_REMINDERS_SUCCESS,
+                type: READ_JOGOS_SUCCESS,
                 payload: response.data
             })
            
         } catch(error){
             dispatch({
-                type: READ_REMINDERS_ERROR,
+                type: READ_JOGOS_ERROR,
                 payload:{
                     title:"Querido usuario, lo sentimos hubo un error",
                     debug: error
@@ -96,6 +98,12 @@ export function loadCreateReminder() {
     }
 }
 
+export function cancelCreateReminder(){
+    return {
+        type: LOAD_CREATE_REMINDER
+    }
+}
+
 export function updateNextJogo(jogoDate) {
     return function(dispatch){
         dispatch({
@@ -103,4 +111,24 @@ export function updateNextJogo(jogoDate) {
             payload: jogoDate
         })
     }
+}
+
+export function readReminders() {
+    return async function(dispatch){
+        try{
+            dispatch({
+                type: READ_REMINDERS_SUCCESS,
+                payload: reminders
+            })
+           
+        } catch(error){
+            dispatch({
+                type: READ_REMINDERS_ERROR,
+                payload:{
+                    title:"Querido usuario, lo sentimos hubo un error",
+                    debug: error
+                }
+            })
+        }
+    }   
 }

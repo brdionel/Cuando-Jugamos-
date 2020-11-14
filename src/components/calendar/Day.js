@@ -32,14 +32,24 @@ const Day = ({ reminders, currentDay, loading }) => {
 
     return (
         !loading ? <ul className="events p-0">
-            {RemindersOnDay.map(item => (
+            {RemindersOnDay.map(item => 
+                { if(item.idLocal) {
+                    return (
+                        <div key={item.id} className={styles.wrapper} onClick = {() => handleClick(item)}>
+                            <Avatar src={item.idLocal.avatar} />
+                            <span> - </span>
+                            <Avatar src={item.idVisitante.avatar} />
+                        </div>)
+                }
+                    else return (
+                        <li>
+                            {item.reminder}
+                        </li>
+                    )
 
-                <div key={item.id} className={styles.wrapper} onClick = {() => handleClick(item)}>
-<                    Avatar src={item.localAvatar} />
-                    <span> - </span>
-                    <Avatar src={item.visitanteAvatar} />
-                </div>
-            ))}
+                }
+                
+            )}
         </ul> 
         : <Spin indicator={antIcon} />
 
