@@ -1,9 +1,12 @@
 
 import styles from './Day.module.css';
-import React from 'react';
-import { Avatar, Image } from 'antd';
+import React, { useState } from 'react';
+import { connect } from 'react-redux'
+import { Avatar, Badge } from 'antd';
 import moment from 'moment';
 import { Spin, Icon } from 'antd';
+import { selectReminder, showDetails } from '../../store/actions'
+
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 const remindersOnDay = (reminders, currentDay) => {
@@ -22,28 +25,56 @@ const remindersOnDay = (reminders, currentDay) => {
     return remindersOnDay;
 }
 
-const Day = ({ reminders, currentDay, loading }) => {
+const Day = ({ reminders, currentDay, loading, selectReminder, showDetails }) => {
 
-    const RemindersOnDay = remindersOnDay(reminders, currentDay);
+  const RemindersOnDay = remindersOnDay(reminders, currentDay);
 
-    const handleClick = (item) =>{
-        alert(item.localNome + ' contra ' + item.visitanteNome)
+  const handleShow = (item) => {
+    selectReminder(item)
+    showDetails()
+  }
+
+  return (
+    <>
+      {!loading ? <ul className="events p-0">
+        {RemindersOnDay.map(item => 
+          { if(item.idLocal) {
+            return (
+              <div key={item._id} className={styles.wrapper} 
+                onClick = { () => handleShow(item)}
+              >
+                <Avatar src={item.idLocal.avatar} />
+                <span> - </span>
+                <Avatar src={item.idVisitante.avatar} />
+              </div>
+              )
+            }
+            else return (
+              <li key={item.id} className = {styles.wrapperReminder}>
+                <Badge color="yellow" text={item.reminder} />
+              </li>
+            )
+          }
+        )}
+    </ul> 
+    : <Spin indicator={antIcon} />
     }
-
-    return (
-        !loading ? <ul className="events p-0">
-            {RemindersOnDay.map(item => (
-
-                <div key={item.id} className={styles.wrapper} onClick = {() => handleClick(item)}>
-<                    Avatar src={item.localAvatar} />
-                    <span> - </span>
-                    <Avatar src={item.visitanteAvatar} />
-                </div>
-            ))}
-        </ul> 
-        : <Spin indicator={antIcon} />
-
-
-    );
+    </>
+  );
 }
-export default Day
+
+const mapStateToProps = (state) => {
+    return {
+        jogo: state.reminder
+    }
+}
+
+
+const mapDispacthToProps = (dispacth) => {
+    return {
+        selectReminder: (item) => dispacth(selectReminder(item)),
+        showDetails: () => dispacth(showDetails())
+    }
+}
+
+export default connect(mapStateToProps, mapDispacthToProps)(Day)

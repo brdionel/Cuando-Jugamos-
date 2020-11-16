@@ -1,69 +1,65 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Input, DatePicker, Button } from 'antd'
-import { SelectInput } from '../inputs'
 import styles from './ReminderForm.module.css'
-
+import { cancelCreateReminder, createReminder, setDate } from '../../store/actions'
+ 
 const ReminderForm = (props) => {
-
-    const { date, setDate, handleSubmit} = props;
+    const { date, setDate, cancelCreateReminder, createReminder} = props;
 
     const [reminder, setReminder] = useState('') 
-    const [color, setColor] = useState('#000000')
-
-    const options = [
-        {
-            text: 'to-do',
-            value: '#005EFF'
-        },
-        {
-            text: 'azap',
-            value: '#da6eff'
-        },
-        {
-            text: 'important',
-            value: '#FF0044'
-        }
-    ]
 
     const onSubmit = (e) => {
         e.preventDefault();
         const newObject = {
             reminder, 
-            color,
-            date
+            fecha : date
         }
 
-        handleSubmit(newObject)
+        createReminder(newObject)
+    }
+
+    const handleClose = () => {
+        cancelCreateReminder()
     }
     
     return (
         <form onSubmit = {onSubmit} className = {styles.wrapperReminderForm}>
-        <h3>Nuevo Recordatorio</h3>
+            <div className = 'd-flex justify-content-between mb-4'>
+                <h4>Añadir nuevo recordatorio</h4>
+                <Button onClick = {handleClose}> X </Button>
+            </div>
             <div class="form-row">
                 <div class="form-group col">
                     <Input 
-                        placeholder="recordatorio"
+                        placeholder="Recordatorio"
                         value = {reminder}
                         onChange = { e => setReminder(e.target.value)}
+                        size="large" 
                     /> 
                 </div>
             </div>
             <div class="form-row">
-                <div class="col">
+                <div class="form-group col">
                     <DatePicker 
                         value = {date}
                         onChange = {setDate}
+                        size = 'large'
                     >
                     </DatePicker>
                 </div>
-                <div class="col">
-                    <span>Ingresa una fecha aqui, o directamente haz un click en el calendario</span>
+            </div>
+            <hr/>
+            <div class="form-row">
+                <div class="form-group col">
+                    <Button 
+                        htmlType = "submit"
+                        size = "large"
+                    >
+                        Guardar
+                    </Button>
                 </div>
             </div>
-    
-            <Button htmlType = "submit">
-                Guardar
-                </Button>
             {/*         
         <SelectInput
             handleChange = {setColor}
@@ -74,4 +70,18 @@ const ReminderForm = (props) => {
     )
 }
 
-export default ReminderForm;
+const mapStateToProps = (state) => {
+    return {
+        date: state.date
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        cancelCreateReminder: () => dispatch(cancelCreateReminder()), 
+        createReminder: (payload) => dispatch(createReminder(payload)),
+        setDate: (date) => dispatch(setDate(date)) 
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReminderForm);

@@ -14,10 +14,17 @@ const NextJogo = (props) => {
     return (
         <div>
             { prox? (
-                <p>
-                    Faltan {prox.diff(hoje, 'days')} dias para decir...
-                    ! Hoy Juega Boca "
-                </p>
+
+                <div className="jumbotron" style = {{
+                    background: '#f0dd24'
+                }}>
+                    <p class="lead">
+                        Faltan <span class="lead">{prox.diff(hoje, 'days')} </span>
+                        dias para decir... 
+                        <br/>
+                        <span class="font-weight-bold">¡ Hoy Juega Boca !</span> 
+                    </p>
+                </div>
             )
                 : null
             }

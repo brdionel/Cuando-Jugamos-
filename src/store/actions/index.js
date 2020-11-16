@@ -1,6 +1,8 @@
 import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS,
      CREATE_REMINDER_ERROR, READ_REMINDERS, READ_REMINDERS_ERROR, 
-     READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, UPDATE_NEXT_JOGO} from '../types';
+     READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, CANCEL_CREATE_REMINDER, 
+     UPDATE_NEXT_JOGO, READ_JOGOS_SUCCESS, SET_DATE,
+     READ_JOGOS_ERROR, SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS} from '../types';
     
 import axios from 'axios';
 
@@ -8,14 +10,14 @@ const reminders = [
     {
         id:1,
         reminder:'Reminder 1',
-        day:'Wed Feb 05 2020 00:20:15 GMT-0500',
+        fecha:'Sat Nov 15 2020 00:20:15 GMT-0500',
         color:'#21c236'
 
     },
     {
         id:2,
         reminder:'Reminder 2',
-        date:'Thu Feb 06 2020 00:20:15 GMT-0500',
+        fecha:'Sun Nov 16 2020 00:20:15 GMT-0500',
         color:'#da6eff'
 
 
@@ -23,32 +25,31 @@ const reminders = [
     {
         id:3,
         reminder:'Reminder 3',
-        date:'Thu Feb 06 2020 00:20:15 GMT-0500',
+        fecha:'Mon Nov 17 2020 00:20:15 GMT-0500',
         color:'#FF0044'
 
     },
     {        
         id:4,
         reminder:'Reminder 4',
-        date:'Thu Mar 06 2020 00:20:15 GMT-0500',
+        fecha:'Tue Nov 18 2020 00:20:15 GMT-0500',
         color:'#da6eff'
     }
     
 ]
 
-
-export function readReminders() {
+export function readJogos() {
     return async function(dispatch){
         try{
             const response = await axios.get('http://localhost:8000/jogos');
             dispatch({
-                type: READ_REMINDERS_SUCCESS,
+                type: READ_JOGOS_SUCCESS,
                 payload: response.data
             })
            
         } catch(error){
             dispatch({
-                type: READ_REMINDERS_ERROR,
+                type: READ_JOGOS_ERROR,
                 payload:{
                     title:"Querido usuario, lo sentimos hubo un error",
                     debug: error
@@ -61,8 +62,7 @@ export function readReminders() {
 export function createReminder(reminder){
     const newReminder = {
         ...reminder, 
-        id: reminders.length + 1,
-        day: null
+        id: reminders.length + 1
     }
     return function(dispatch){
         try{
@@ -96,11 +96,65 @@ export function loadCreateReminder() {
     }
 }
 
+export function cancelCreateReminder(){
+    return {
+        type: CANCEL_CREATE_REMINDER
+    }
+}
+
 export function updateNextJogo(jogoDate) {
     return function(dispatch){
         dispatch({
             type: UPDATE_NEXT_JOGO,
             payload: jogoDate
         })
+    }
+}
+
+export function readReminders() {
+    return async function(dispatch){
+        try{
+            dispatch({
+                type: READ_REMINDERS_SUCCESS,
+                payload: reminders
+            })
+           
+        } catch(error){
+            dispatch({
+                type: READ_REMINDERS_ERROR,
+                payload:{
+                    title:"Querido usuario, lo sentimos hubo un error",
+                    debug: error
+                }
+            })
+        }
+    }   
+}
+
+export function selectReminder(reminder){
+    return function(dispatch){
+        dispatch({
+            type: SET_REMINDER, 
+            payload: reminder
+        })
+    }
+}
+
+export function showDetails(){
+    return {
+        type: SHOW_DETAILS
+    }
+}
+
+export function closeDetails(){
+    return {
+        type: CLOSE_DETAILS
+    }
+}
+
+export function setDate(date){
+    return {
+        type: SET_DATE,
+        payload: date
     }
 }
