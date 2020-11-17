@@ -15,24 +15,30 @@ const MyCalendar = ({ readReminders, date, setDate, updateNextJogo, readJogos, r
 			await readJogos() 
 			readReminders()
 		})()
-  }, []);
-
-  useEffect(() => {
-  	if(reminders.length > 0){
-      console.log('ahora hay reminders cargados!' + JSON.stringify(reminders))
-      nextJogo()
-    }
-  }, [reminders])
+	}, []);
+	
+	useEffect(() => {
+		nextJogo()
+	}, [reminders])
 
 	const nextJogo = () => {
-		const hoje = moment()
-		const next = reminders.find(remin => {
-				if(moment(remin.fecha) >= hoje ) return remin
+		const hoje = moment().format('DD/MM/YYYY');
+		
+		let arrayOrdenado = reminders.sort(function(a,b){
+			// Turn your strings into dates, and then subtract them
+			// to get a value that is either negative, positive, or zero.
+			return new Date(a.fecha) - new Date(b.fecha);
+		})
+
+		
+		const next = arrayOrdenado.find(remin => {
+			if(!remin.idLocal) return false;
+			
+			let jogo = moment(remin.fecha).format('DD/MM/YYYY')
+			if(hoje <= jogo) return remin
 		})
 
 		if(next) updateNextJogo(next)
-
-		console.log('el juego siguiente es :'+ JSON.stringify(next))
 	}
 
 	// functions
@@ -50,12 +56,12 @@ const MyCalendar = ({ readReminders, date, setDate, updateNextJogo, readJogos, r
 
 	//COMPONENTE
 	return (
-		<div className = {`${styles.wrapperCalendar} my-5`}>
+		<div className = {`${styles.wrapperCalendar} mb-5`}>
 			<Calendar
-					value = {date}
-					onSelect = {setDate}
-					dateCellRender={DayToFn}
-					monthCellRender={Month}
+				value = {date}
+				onSelect = {setDate}
+				dateCellRender={DayToFn}
+				monthCellRender={Month}
 			/>
 		</div>
 

@@ -1,35 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-const NextJogo = (props) => {
-    let prox = null;
-    let hoje = null;
-    if(props.nextJogo){
-        console.log('props es: '+ JSON.stringify(props.nextJogo.fecha))
-        prox = moment(props.nextJogo.fecha)
-        hoje = moment()
-    }
+const NextJogo = ({nextJogo}) => {
+    
+    let diasProJogo = null
+    let hoje = moment();
+    let prox = moment(nextJogo.fecha)
+    diasProJogo = prox.diff(hoje, 'days');
 
     return (
         <div>
-            { prox? (
-
-                <div className="jumbotron" style = {{
+            {console.log('dias pro jogo: '+ diasProJogo)}
+            {
+                (diasProJogo !== null)
+                ?  <div className="jumbotron" style = {{
                     background: '#f0dd24'
-                }}>
-                    <p class="lead">
-                        Faltan <span class="lead">{prox.diff(hoje, 'days')} </span>
-                        dias para decir... 
-                        <br/>
-                        <span class="font-weight-bold">¡ Hoy Juega Boca !</span> 
-                    </p>
+                    }}>
+                    {/* {console.log(moment(hoje).format('DD/MM/YYYY'))}
+                    {prox && console.log(moment(prox).format('DD/MM/YYYY'))} */}
+                    { (moment(hoje).format('DD/MM/YYYY') === moment(prox).format('DD/MM/YYYY'))
+                        ? 
+                            <p className="lead">
+                                <span className="font-weight-bold">¡ Hoy Juega Boca !</span> 
+                            </p>
+            
+                        :   (diasProJogo === 0)
+                            ? <p className="lead">
+                                <span className="font-weight-bold">¡ Mañana Juega Boca !</span> 
+                            </p>
+                            : ( <p className="lead">
+                                Faltan <span className="lead">{diasProJogo + 1} </span>
+                                dias para decir... 
+                                <br/>
+                                <span className="font-weight-bold">¡ Hoy Juega Boca !</span> 
+                            </p>)
+                            
+                    }
                 </div>
-            )
+
                 : null
             }
         </div>
     )
 }
 
-export default connect( (state) => state )(NextJogo);
+const mapStateToProps = (state) => {
+    return {
+        nextJogo: state.nextJogo
+    }
+}
+
+export default connect(mapStateToProps)(NextJogo);

@@ -24,7 +24,7 @@ const ReminderForm = (props) => {
     }
     
     return (
-        <form onSubmit = {onSubmit} className = {styles.wrapperReminderForm}>
+        <form onSubmit = {onSubmit} className = {`${styles.wrapperReminderForm} mb-5`}>
             <div className = 'd-flex justify-content-between mb-4'>
                 <h4>Añadir nuevo recordatorio</h4>
                 <Button onClick = {handleClose}> X </Button>

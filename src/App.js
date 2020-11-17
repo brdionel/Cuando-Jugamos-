@@ -6,6 +6,7 @@ import NavBar from './components/NavBar'
 import NextJogo from './components/NextJogo'
 import JogoDetails from './components/JogoDetails'
 import ReminderForm from './components/ReminderForm'
+import Data from './components/Data'
 
 
 function App({ state }) {
@@ -25,7 +26,6 @@ function App({ state }) {
             {state.creating
 							? (<>
 							<ReminderForm />
-							{/* <div className = {styles.transparencia} ></div> */}
 							</>)
 							: null
 					  }
@@ -33,8 +33,14 @@ function App({ state }) {
             <div className='col-sm-12 col-lg-9 pl-0'>
               <Calendar />
             </div>
-            <div className='col-sm-12 col-lg-3 d-flex align-items-center pr-0'>
-              <NextJogo />
+            <div className='col-sm-12 col-lg-3 d-flex flex-column pr-0'>
+              <Data />
+              {console.log('next en APP: '+state.nextJogo)}
+              {state.nextJogo
+                ? <NextJogo />
+                : null
+              }
+              
             </div>
 
           </div>

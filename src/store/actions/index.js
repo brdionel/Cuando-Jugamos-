@@ -9,14 +9,14 @@ import axios from 'axios';
 const reminders = [
     {
         id:1,
-        reminder:'Reminder 1',
+        reminder:'Examen JavaScript',
         fecha:'Sat Nov 15 2020 00:20:15 GMT-0500',
         color:'#21c236'
 
     },
     {
         id:2,
-        reminder:'Reminder 2',
+        reminder:'Examen Algebra',
         fecha:'Sun Nov 16 2020 00:20:15 GMT-0500',
         color:'#da6eff'
 
@@ -24,14 +24,14 @@ const reminders = [
     },
     {
         id:3,
-        reminder:'Reminder 3',
+        reminder:'Viaje a Junin',
         fecha:'Mon Nov 17 2020 00:20:15 GMT-0500',
         color:'#FF0044'
 
     },
     {        
         id:4,
-        reminder:'Reminder 4',
+        reminder:'Cumpleaños Palomo',
         fecha:'Tue Nov 18 2020 00:20:15 GMT-0500',
         color:'#da6eff'
     }
