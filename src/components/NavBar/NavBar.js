@@ -3,7 +3,6 @@ import { loadCreateReminder } from '../../store/actions';
 import { connect } from 'react-redux';
 import { Button } from 'antd';
 import styles from './NavBar.module.css'
-import moment from 'moment'
 
 const NavBar = ({loadCreateReminder, state}) => {
 
@@ -12,8 +11,8 @@ const NavBar = ({loadCreateReminder, state}) => {
     }
 
     return(
-        <nav className={`navbar p-3 ${styles.wrapper} mb-5`}>
-            <div className = "container d-flex align-item-center">
+        <nav className={`navbar py-3  ${styles.wrapper} mb-5`}>
+            <div className = "container d-flex align-item-center px-0">
                 <p className="navbar-brand m-0">Cuando Jugamos?</p>
                 { !state.creating
                     ? (<Button 

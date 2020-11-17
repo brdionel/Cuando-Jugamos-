@@ -43,9 +43,9 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails }) =>
               <div key={item._id} className={styles.wrapper} 
                 onClick = { () => handleShow(item)}
               >
-                <Avatar src={item.idLocal.avatar} />
-                <span> - </span>
-                <Avatar src={item.idVisitante.avatar} />
+                <Avatar src={item.idLocal.avatarURL} />
+                <span>  </span>
+                <Avatar src={item.idVisitante.avatarURL} />
               </div>
               )
             }
