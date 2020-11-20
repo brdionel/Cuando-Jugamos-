@@ -1,6 +1,6 @@
 # ¿Cuando Jugamos? #
 
-Armá tu agenda en torno al Fútbol. 
+Armá tu agenda en torno al Fútbol. No te pierdas ningun partido.
 
 ### Demo
 ![DemoProyecto](https://res.cloudinary.com/dtnixnyfz/image/upload/v1605901266/cuando_jugamos-gif_x35cyg.gif)
@@ -11,7 +11,7 @@ Armá tu agenda en torno al Fútbol.
   + un alert que diga cuando es el proximo partido.
   + detalles de los partidos del mes.
   + crear recordatorios en mi agenda.
-  + no perderme ningun partido.
+  + organizar mis dias alrededor del futbol.
 
 ### API
 
