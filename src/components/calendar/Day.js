@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { Avatar, Badge } from 'antd';
 import moment from 'moment';
 import { Spin, Icon } from 'antd';
-import { selectReminder, showDetails } from '../../store/actions'
+import { selectReminder, showDetails } from '../../store/actions';
+import { animateScroll as scroll} from 'react-scroll';
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
@@ -25,14 +26,26 @@ const remindersOnDay = (reminders, currentDay) => {
     return remindersOnDay;
 }
 
-const Day = ({ reminders, currentDay, loading, selectReminder, showDetails }) => {
+const Day = ({ reminders, currentDay, loading, selectReminder, showDetails, time }) => {
 
   const RemindersOnDay = remindersOnDay(reminders, currentDay);
+    const scrollType = {
+      duration: 700,
+      delay: 500,
+      smooth: true, // linear "easeInQuint" "easeOutCubic" https://easings.net/es
+      // offset: 50,
+    };
 
   const handleShow = (item) => {
     selectReminder(item)
     showDetails()
+    scroll.scrollTo(50, scrollType);
   }
+
+  let color = time!== {} && time.secondaryColor === '#ffffff'
+  ? time.primaryColor 
+  : time.secondaryColor
+
 
   return (
     <>
@@ -40,7 +53,7 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails }) =>
         {RemindersOnDay.map(item => 
           { if(item.idLocal) {
             return (
-              <div key={item._id} className={styles.wrapper} 
+              <div key={item._id + item.idLocal.nome} className={styles.wrapper} 
                 onClick = { () => handleShow(item)}
               >
                 <Avatar src={item.idLocal.avatarURL} />
@@ -50,8 +63,11 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails }) =>
               )
             }
             else return (
-              <li key={item.id} className = {styles.wrapperReminder}>
-                <Badge color="yellow" text={item.reminder} />
+              <li key={item.id + item.reminder} className = {styles.wrapperReminder}>
+                <Badge 
+                  color={color} 
+                  text={item.reminder} 
+                />
               </li>
             )
           }
@@ -65,7 +81,9 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails }) =>
 
 const mapStateToProps = (state) => {
     return {
-        jogo: state.reminder
+        jogo: state.reminder,
+        time: state.time,
+        loading: state.loading
     }
 }
 

@@ -1,19 +1,23 @@
-import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS, CREATE_REMINDER_ERROR,
-    READ_REMINDERS, READ_REMINDERS_ERROR, READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, 
-    UPDATE_NEXT_JOGO, CANCEL_CREATE_REMINDER, READ_JOGOS_ERROR, READ_JOGOS_SUCCESS, 
-    SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS, SET_DATE } from '../types';
+import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS, CREATE_REMINDER_ERROR, SET_TIME_SUCCESS,
+    SET_TIME_ERROR, READ_REMINDERS, READ_REMINDERS_ERROR, READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, 
+    UPDATE_NEXT_JOGO, CANCEL_CREATE_REMINDER, READ_JOGOS_ERROR, READ_JOGOS_SUCCESS, SET_TIME,
+    SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS, SET_DATE, READ_TIMES_SUCCESS, READ_JOGOS, SET_VISIBLE,
+    CLOSE_VISIBLE } from '../types';
 
 import moment from 'moment'
 
 const init = {
     reminders:[],
     reminder:{},
+    times: [],
+    time: false,
     showDetails: false,
     loading:false,
     error:false,
     creating: false,
     nextJogo: false,
-    date: moment(new Date, 'yyyy-mm-dd')
+    date: moment(new Date, 'yyyy-mm-dd'),
+    visible: false
 }
     
 export default (state=init, action)=>{
@@ -22,6 +26,7 @@ export default (state=init, action)=>{
         case SHOW_DETAILS: 
         return {
             ...state,
+            creating: state.creating && false,
             showDetails: true
         }
 
@@ -37,6 +42,12 @@ export default (state=init, action)=>{
             loading:true
         }
 
+        case SET_TIME:
+            return {
+                ...state,
+                loading: true
+            }
+
         case READ_REMINDERS_SUCCESS: 
         return {
             ...state,
@@ -49,6 +60,12 @@ export default (state=init, action)=>{
             ...state,
             loading:false,
             error:action.payload
+        }
+
+        case READ_JOGOS: 
+        return {
+            ...state,
+            loading:true,
         }
 
         case READ_JOGOS_SUCCESS: 
@@ -91,6 +108,7 @@ export default (state=init, action)=>{
         case LOAD_CREATE_REMINDER:
             return {
                 ...state,
+                showDetails: state.showDetails && false,
                 creating: true
             }
 
@@ -116,6 +134,32 @@ export default (state=init, action)=>{
             return {
                 ...state,
                 date: action.payload
+            }
+
+        case READ_TIMES_SUCCESS: 
+            return {
+                ...state,
+                times: action.payload
+            }
+
+        case SET_TIME_SUCCESS:
+            return {
+                ...state,
+                reminders: [],
+                loading: false,
+                time: action.payload.time
+            }
+
+        case SET_VISIBLE:
+            return {
+                ...state,
+                visible: true
+            }
+
+        case CLOSE_VISIBLE:
+            return {
+                ...state,
+                visible: false
             }
 
         default: return state;

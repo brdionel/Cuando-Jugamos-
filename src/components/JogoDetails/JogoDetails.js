@@ -30,7 +30,7 @@ const JogoDetails = ({ jogo, closeDetails}) => {
                             <strong className='text-center'>{jogo.idVisitante.nome}</strong>
                         </div>
                     </div>
-                    <p className="text-center">{jogo.idLocal.estadio}</p>
+                    <p className="text-center font-weight-bold text-monospace">{jogo.idLocal.estadio}</p>
                 </div>
                 <div className = 'col-md-1 offset-md-2'>
                     <button onClick = {handleClose}> X </button>

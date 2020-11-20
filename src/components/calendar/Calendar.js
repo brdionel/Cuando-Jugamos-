@@ -4,42 +4,16 @@ import moment from 'moment';
 import { Calendar, Button } from 'antd';
 import Month from './Month';
 import Day from './Day';
-import { readReminders, createReminder, updateNextJogo, readJogos , setDate} from '../../store/actions'
+import SelectInput from '../inputs';
+import { readReminders, createReminder, updateNextJogo, readJogos ,
+	setDate, readJogosById, readTimes} from '../../store/actions'
 import styles from './Calendar.module.css'
 
-const MyCalendar = ({ readReminders, date, setDate, updateNextJogo, readJogos, reminders, loading }) => {
+const MyCalendar = ( props ) => {
 
-	// triggers
-   useEffect(() => { 
-		(async () => {
-			await readJogos() 
-			readReminders()
-		})()
-	}, []);
-	
-	useEffect(() => {
-		nextJogo()
-	}, [reminders])
+	const { readReminders, date, setDate, updateNextJogo, readJogos, reminders,
+		 loading, readJogosById, readTimes, time } = props;
 
-	const nextJogo = () => {
-		const hoje = moment().format('DD/MM/YYYY');
-		
-		let arrayOrdenado = reminders.sort(function(a,b){
-			// Turn your strings into dates, and then subtract them
-			// to get a value that is either negative, positive, or zero.
-			return new Date(a.fecha) - new Date(b.fecha);
-		})
-
-		
-		const next = arrayOrdenado.find(remin => {
-			if(!remin.idLocal) return false;
-			
-			let jogo = moment(remin.fecha).format('DD/MM/YYYY')
-			if(hoje <= jogo) return remin
-		})
-
-		if(next) updateNextJogo(next)
-	}
 
 	// functions
 		const DayToFn = (day) => {
@@ -75,7 +49,8 @@ const mapStateToProps = (state) => {
     return {
 		date: state.date,
 		loading: state.loading,
-		reminders: state.reminders
+		reminders: state.reminders,
+		time: state.time
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -84,7 +59,9 @@ const mapDispatchToProps = (dispatch) => {
         createReminder: (payload) => dispatch(createReminder(payload)),
         updateNextJogo: (payload) => dispatch(updateNextJogo(payload)),
 		readJogos: () => dispatch(readJogos()),
-		setDate: (payload) => dispatch(setDate(payload))
+		setDate: (payload) => dispatch(setDate(payload)),
+		readJogosById: (id) => dispatch(readJogosById(id)),
+		readTimes: () => dispatch(readTimes())
     }
 }
 

@@ -1,0 +1,78 @@
+.wrapper {
+    margin: 0 100px;
+    width: 100%;
+    max-width: 700px;
+    border: 1rem;
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+    padding: 5em;
+    border-radius: .5em;
+    /* background-color: rgb(255, 255, 255); */
+    background: rgb(246,246,247);
+    background: linear-gradient(90deg, rgba(246,246,247,1) 0%,
+    rgba(205,206,208,0.30575980392156865) 33%, rgba(123,128,129,0.7595413165266106) 100%);
+    /* animation: aparece 1s ease; */
+}
+
+.body {
+    height: 100vh;
+}
+
+.positionBall {
+  position: relative;
+  right: 150px;
+}
+
+.ball{
+    width: 100px;
+    height: 100px;
+    animation: rebota 1s alternate infinite ease-in;
+    background-color: orangered;
+    border-radius: 50%;
+  }
+  
+.shadow{
+  width: 100px;
+  height: 1px;
+  background: #000;
+  box-shadow: 0 0 5px 5px #000;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0px; 
+  left: 0;
+  opacity: .2;
+  transform: scale(0.5);
+  animation: sombra 1s alternate infinite ease-in;
+}
+  
+@keyframes sombra{ 
+  
+  100%{
+    transform: scale(1);
+    opacity: .5
+  }
+}
+
+@keyframes rebota {
+  0% {
+    bottom: 0;
+    height: 70px;
+  }
+  100% {
+    bottom: 400px;
+  }
+}
+
+@keyframes aparece {
+    
+  0% {
+      transform: scale(0);
+  }
+
+  50% {
+      transform: scale(.5);
+  } 
+  
+  100% {
+      transform: scale(1);
+  }
+}

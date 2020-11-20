@@ -1,4 +1,5 @@
 .data {
     transition: all 2ms ease;
     text-align: center;
+    animation: latido 1s ease infinite;
 }
