@@ -5,7 +5,7 @@ Armá tu agenda en torno al Fútbol.
 ### Demo
 ![DemoProyecto](https://res.cloudinary.com/dtnixnyfz/image/upload/v1605901266/cuando_jugamos-gif_x35cyg.gif)
 
-#### Como un Usuario yo quiero:
+### Como usuario quiero:
 
   + seleccionar mi equipo.
   + un alert que diga cuando es el proximo partido.
