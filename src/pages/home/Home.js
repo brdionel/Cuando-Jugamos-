@@ -24,7 +24,6 @@ const Home = (props) => {
   useEffect(() => { 
 
 		if(state.time._id){
-        console.log('el equipo que envio es: '+state.time._id)
         readJogosById(state.time._id) 
         readReminders()
     } 
@@ -35,20 +34,20 @@ const Home = (props) => {
 	}, [state.reminders])
 
 	const nextJogo = () => {
-		const hoje = moment().format('DD/MM/YYYY');
-		
-		let arrayOrdenado = state.reminders.sort(function(a,b){
+    // Agrego el formato de las fechas para que funcione a la hora de comparar
+    const hoje = moment().format('YYYY MM DD');
+    
+    let arrayOrdenado = state.reminders.sort(function(a,b){
 			// Turn your strings into dates, and then subtract them
 			// to get a value that is either negative, positive, or zero.
 			return new Date(a.fecha) - new Date(b.fecha);
 		})
 
-		
 		const next = arrayOrdenado.find(remin => {
 			if(!remin.idLocal) return false;
 			
-			let jogo = moment(remin.fecha).format('DD/MM/YYYY')
-			if(hoje <= jogo) return remin
+      let jogo = moment(remin.fecha).format('YYYY MM DD');
+			if(moment(jogo).isSameOrAfter(moment(hoje))) return remin
 		})
 
 		if(next) updateNextJogo(next)

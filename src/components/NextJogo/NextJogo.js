@@ -7,25 +7,26 @@ import s from './NextJogo.module.css'
 
 AOS.init ({ 
   
-    // Configuraciones que pueden ser anuladas por elemento, por atributos `data-aos- *`: 
-    delay : 1000 ,  // valores de 0 a 3000 , con un paso de 50 ms de 
+  // Configuraciones que pueden ser anuladas por elemento, por atributos `data-aos- *`: 
+  delay : 1000 ,  // valores de 0 a 3000 , con un paso de 50 ms de 
 }) ;
 
 const NextJogo = ({nextJogo, time}) => {
     
-    let diasProJogo = null
-    let hoje = moment();
-    let prox = moment(nextJogo.fecha)
-    diasProJogo = prox.diff(hoje, 'days');
+  let diasProJogo = null
+  let hoje = moment();
+  console.log('next jogo: '+ nextJogo.fecha)
+  let prox = moment(nextJogo.fecha)
+  diasProJogo = prox.diff(hoje, 'days');
 
-    const styles = {
-        backgroundColor: time!== {} && `${time.primaryColor}`
-    }
+  const styles = {
+    backgroundColor: time!== {} && `${time.primaryColor}`
+  }
 
-    return (
-        <div>
-            {console.log('dias pro jogo: '+ diasProJogo)}
-            {
+  return (
+    <div>
+      {console.log('dias pro jogo: '+ diasProJogo)}
+        {
                 (diasProJogo !== null)
                 ?  <div className="jumbotron text-white text-center" style = { styles } data-aos="fade-left">
                     {/* {console.log(moment(hoje).format('DD/MM/YYYY'))}

@@ -39,29 +39,29 @@ const reminders = [
 ]
 
 export function readJogos() {
-    return async function(dispatch){
-        try{
-            dispatch({
-                type: READ_JOGOS
-            })
-            const response = await axios.get('http://localhost:8000/jogos');
-            setTimeout(() => {
-                dispatch({
-                    type: READ_JOGOS_SUCCESS,
-                    payload: response.data
-                })
-            }, 1500)
-           
-        } catch(error){
-            dispatch({
-                type: READ_JOGOS_ERROR,
-                payload:{
-                    title:"Querido usuario, lo sentimos hubo un error",
-                    debug: error
-                }
-            })
+  return async function(dispatch){
+    try{
+      dispatch({
+        type: READ_JOGOS
+      })
+      const response = await axios.get('http://localhost:8000/jogos');
+      setTimeout(() => {
+        dispatch({
+          type: READ_JOGOS_SUCCESS,
+          payload: response.data
+        })
+      }, 1500)
+        
+    } catch(error){
+      dispatch({
+        type: READ_JOGOS_ERROR,
+        payload:{
+          title:"Querido usuario, lo sentimos hubo un error",
+          debug: error
         }
-    }   
+      })
+    }
+  }   
 }
 
 export function readJogosById(id) {

@@ -14,11 +14,11 @@ const ModalTime = ({visible, times, selectTime, closeVisible, readTimes }) =>{
     readTimes()
   }, []);
 
-  // const showModal = () => {
-  //   this.setState({
-  //     visible: true,
-  //   });
-  // };
+  const showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
 
   const handleOk = e => {
     if(inputSelect){
@@ -35,7 +35,6 @@ const ModalTime = ({visible, times, selectTime, closeVisible, readTimes }) =>{
   };
 
   function onChange(value) {
-    console.log(value)
     setInputSelect(value)
     // setInputSelect(e.target.value)
   }
@@ -81,7 +80,8 @@ const ModalTime = ({visible, times, selectTime, closeVisible, readTimes }) =>{
 const mapStateToProps = (state) => {
   return {
     times: state.times,
-    visible: state.visible
+    visible: state.visible,
+    error: state.error
   }
 }
 

@@ -7,17 +7,17 @@ import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS, CREATE_REMINDER_ERROR, SET_TI
 import moment from 'moment'
 
 const init = {
-    reminders:[],
-    reminder:{},
-    times: [],
-    time: false,
-    showDetails: false,
-    loading:false,
-    error:false,
-    creating: false,
-    nextJogo: false,
-    date: moment(new Date, 'yyyy-mm-dd'),
-    visible: false
+  reminders:[],
+  reminder:{},
+  times: [],
+  time: false,
+  showDetails: false,
+  loading:false,
+  error:false,
+  creating: false,
+  nextJogo: false,
+  date: moment(new Date, 'yyyy-mm-dd'),
+  visible: false
 }
     
 export default (state=init, action)=>{
@@ -79,7 +79,7 @@ export default (state=init, action)=>{
         return {
             ...state,
             loading:false,
-            error:action.payload
+            error: action.payload
         }
 
 
