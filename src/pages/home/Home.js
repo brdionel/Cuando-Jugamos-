@@ -1,17 +1,15 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux'
-import 'antd/dist/antd.css';
-import Calendar from '../../components/calendar/Calendar';
-import NavBar from '../../components/NavBar'
-import NextJogo from '../../components/NextJogo'
-import JogoDetails from '../../components/JogoDetails'
-import ReminderForm from '../../components/ReminderForm'
-import Data from '../../components/Data'
-import { Spin, Icon } from 'antd';
-import moment from 'moment';
-import { readReminders, createReminder, updateNextJogo, readJogos ,
-	setDate, readJogosById, readTimes, setVisible} from '../../store/actions'
-import ModalTime from '../../components/ModalTime';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import "antd/dist/antd.css";
+import Calendar from "../../components/calendar/Calendar";
+import NavBar from "../../components/NavBar";
+import NextJogo from "../../components/NextJogo";
+import JogoDetails from "../../components/JogoDetails";
+import ReminderForm from "../../components/ReminderForm";
+import Data from "../../components/Data";
+import moment from "moment";
+import { readReminders, updateNextJogo, readJogosById, setVisible} from "../../store/actions";
+import ModalTime from "../../components/ModalTime";
 
 const Home = (props) => {
 
@@ -24,8 +22,8 @@ const Home = (props) => {
   useEffect(() => { 
 
 		if(state.time._id){
-        readJogosById(state.time._id) 
-        readReminders()
+      readJogosById(state.time._id) 
+      readReminders()
     } 
 	}, [state.time]);
 	
@@ -94,15 +92,14 @@ const Home = (props) => {
         </>
     : null
   } 
-</>
-)
-
+  </>
+  )
 }
 
 const mapStateToProps = (state) => {
-    return {
-      state
-    }
+  return {
+    state
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -115,4 +112,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-  

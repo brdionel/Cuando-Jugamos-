@@ -1,20 +1,20 @@
 @keyframes latido {
     
-    0% {
-        transform: scale(1.2);
-    }
+  0% {
+    transform: scale(1.2);
+  }
 
-    50% {
-        transform: scale(.9);
-    } 
-    
-    100% {
-        transform: scale(1.2);
-    }
+  50% {
+    transform: scale(.9);
+  } 
+  
+  100% {
+    transform: scale(1.2);
+  }
 }
 
 .data {
-    transition: all 2ms ease 5s;
-    text-align: center;
-    animation: latido 1s ease infinite;
+  transition: all 2ms ease 5s;
+  text-align: center;
+  animation: latido 1s ease infinite;
 }
