@@ -15,17 +15,18 @@ const Home = (props) => {
 
   const { readReminders, updateNextJogo, readJogosById, state, setVisible } = props;
 
-  useEffect(()=>{
-    setVisible()
-  }, [])
+  // useEffect(()=>{
+  //   setVisible()
+  // }, [])
 
   useEffect(() => { 
 
-		if(state.time._id){
+		if(state.reminders.length === 0){
+      console.log('se ejecuta efecto')
       readJogosById(state.time._id) 
       readReminders()
     } 
-	}, [state.time]);
+	}, []);
 	
 	useEffect(() => {
     nextJogo()
@@ -53,10 +54,9 @@ const Home = (props) => {
 
   return(
   <>
-    <ModalTime /> 
+    {/* <ModalTime />  */}
     {
-      !state.visible
-      ? <>
+       <>
         <NavBar />
         <div className = 'container'>
           <div className='row'>
@@ -90,7 +90,6 @@ const Home = (props) => {
           </div>
         </div>
         </>
-    : null
   } 
   </>
   )

@@ -1,13 +1,14 @@
 import { Modal, Select } from 'antd';
 import React, {useEffect, useState} from 'react';
+import { useHistory} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectTime, readTimes, closeVisible } from '../../store/actions'
 import styles from '../inputs/SelectTime.module.css'
 
 const { Option } = Select;
 
-const ModalTime = ({visible, times, selectTime, closeVisible, readTimes }) =>{
-
+const ModalTime = ({visible, times, selectTime, closeVisible, readTimes, time }) =>{
+  const history = useHistory()
   const [inputSelect, setInputSelect] = useState('')
 
   useEffect(() => { 
@@ -22,22 +23,30 @@ const ModalTime = ({visible, times, selectTime, closeVisible, readTimes }) =>{
 
   const handleOk = e => {
     if(inputSelect){
-      selectTime(inputSelect)
+      if(inputSelect)
       closeVisible()
+      history.push('/home')
     } else {
       
     }
   };
-
+  
   const handleCancel = e => {
     console.log(e);
     closeVisible()
   };
-
+  
   function onChange(value) {
     setInputSelect(value)
-    // setInputSelect(e.target.value)
   }
+
+
+ // Zarpado  
+  useEffect(() => {
+    selectTime(inputSelect); // This is be executed when `loading` state changes
+    console.log('inputSelect: '+ inputSelect)
+    console.log( time)
+}, [inputSelect])
   
   
   function onSearch(val) {
@@ -81,7 +90,8 @@ const mapStateToProps = (state) => {
   return {
     times: state.times,
     visible: state.visible,
-    error: state.error
+    error: state.error,
+    time: state.time
   }
 }
 

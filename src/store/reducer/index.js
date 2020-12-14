@@ -2,7 +2,7 @@ import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS, CREATE_REMINDER_ERROR, SET_TI
     SET_TIME_ERROR, READ_REMINDERS, READ_REMINDERS_ERROR, READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, 
     UPDATE_NEXT_JOGO, CANCEL_CREATE_REMINDER, READ_JOGOS_ERROR, READ_JOGOS_SUCCESS, SET_TIME,
     SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS, SET_DATE, READ_TIMES_SUCCESS, READ_JOGOS, SET_VISIBLE,
-    CLOSE_VISIBLE } from '../types';
+    CLOSE_VISIBLE, SET_JOGO } from '../types';
 
 import moment from 'moment'
 
@@ -160,6 +160,15 @@ export default (state=init, action)=>{
             return {
                 ...state,
                 visible: false
+            }
+
+        case SET_JOGO:
+            const jogo = state.reminders.find(item => {
+              return(item._id === action.payload) 
+            })
+            return {
+              ...state,
+              reminder: jogo
             }
 
         default: return state;

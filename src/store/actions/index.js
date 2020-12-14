@@ -2,7 +2,7 @@ import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS,SET_TIME_SUCCESS, SET_TIME_ERR
      CREATE_REMINDER_ERROR, READ_JOGOS, READ_REMINDERS_ERROR, READ_REMINDERS, CLOSE_VISIBLE,
      READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, CANCEL_CREATE_REMINDER, SET_VISIBLE,
      UPDATE_NEXT_JOGO, READ_JOGOS_SUCCESS, SET_DATE, READ_TIMES_SUCCESS, SET_TIME,
-     READ_JOGOS_ERROR, SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS} from '../types';
+     READ_JOGOS_ERROR, SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS, SET_JOGO} from '../types';
     
 import axios from 'axios';
 
@@ -65,6 +65,7 @@ export function readJogos() {
 }
 
 export function readJogosById(id) {
+  console.log('aca llega: ' + id)
     if(!id) throw new TypeError('Id no valido')
     return async function(dispatch){
         try{
@@ -254,4 +255,14 @@ export function closeVisible(){
     return {
         type: CLOSE_VISIBLE
     }
+}
+
+export function selectJogo(id) {
+  console.log('aca llega: ' + id)
+  return function(dispatch){
+    dispatch({
+        type: SET_JOGO, 
+        payload: id
+    })
+} 
 }

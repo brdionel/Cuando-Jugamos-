@@ -1,6 +1,7 @@
 
 import styles from './Day.module.css';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Avatar, Badge } from 'antd';
 import moment from 'moment';
@@ -36,11 +37,11 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails, time
       // offset: 50,
     };
 
-  const handleShow = (item) => {
-    selectReminder(item)
-    showDetails()
-    scroll.scrollTo(50, scrollType);
-  }
+  // const handleShow = (item) => {
+  //   electReminder(item)s
+  //   showDetails()
+  //   scroll.scrollTo(50, scrollType);
+  // }
 
   let color = time!== {} && time.secondaryColor === '#ffffff'
   ? time.primaryColor 
@@ -53,13 +54,15 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails, time
         {RemindersOnDay.map(item => 
           { if(item.idLocal) {
             return (
-              <div key={item._id + item.idLocal.nome} className={styles.wrapper} 
-                onClick = { () => handleShow(item)}
+              <Link 
+                to={`/jogo/${item._id}`} 
+                key={item._id + item.idLocal.nome} 
+                className={styles.wrapper} 
               >
                 <Avatar src={item.idLocal.avatarURL} />
-                <span>  </span>
+                <span> - </span>
                 <Avatar src={item.idVisitante.avatarURL} />
-              </div>
+              </Link>
               )
             }
             else return (
