@@ -5,6 +5,7 @@ import store from './store';
 import Jogo from './pages/jogo';
 import Home from './pages/home';
 import SelectTime from './pages/selectTime';
+import NavBar from './components/NavBar';
 
 function App() {
 

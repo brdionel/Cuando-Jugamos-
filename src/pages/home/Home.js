@@ -4,12 +4,10 @@ import "antd/dist/antd.css";
 import Calendar from "../../components/calendar/Calendar";
 import NavBar from "../../components/NavBar";
 import NextJogo from "../../components/NextJogo";
-import JogoDetails from "../../components/JogoDetails";
 import ReminderForm from "../../components/ReminderForm";
-import Data from "../../components/Data";
 import moment from "moment";
 import { readReminders, updateNextJogo, readJogosById, setVisible} from "../../store/actions";
-import ModalTime from "../../components/ModalTime";
+import Data from '../../components/Data';
 
 const Home = (props) => {
 
@@ -25,11 +23,11 @@ const Home = (props) => {
       console.log('se ejecuta efecto')
       readJogosById(state.time._id) 
       readReminders()
+      nextJogo()
     } 
 	}, []);
 	
 	useEffect(() => {
-    nextJogo()
 	}, [state.reminders])
 
 	const nextJogo = () => {
@@ -60,15 +58,10 @@ const Home = (props) => {
         <NavBar />
         <div className = 'container'>
           <div className='row'>
-            {/*  && !state.creating */}
-            { state.showDetails
-              ? <div className= 'col-12'>
-                  <JogoDetails />
-                </div>
-              : null 
-            }
             {/* && !state.showDetails */}
-            {state.creating 
+            {console.log('reminder !=={}' + !state.reminder.fecha)}
+            {console.log('!!reminder' + !!state.reminder)}
+            {state.creating || state.reminder.fecha
               ? (<>
               <ReminderForm />
               </>)
@@ -79,7 +72,8 @@ const Home = (props) => {
               <Calendar />
             </div>
             <div className='col-sm-12 col-lg-3 d-flex flex-column pr-0'>
-              <Data />
+              <Data/>
+              <br/>
               {state.nextJogo
                 ? <NextJogo />
                 : null

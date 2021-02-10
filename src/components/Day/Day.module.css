@@ -7,9 +7,10 @@
 }
 
 .wrapper:hover{
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .wrapperReminder:hover{
-    font-weight: 700;
+  /* font-weight: 700;
+  font-size: 11px; */
 } 

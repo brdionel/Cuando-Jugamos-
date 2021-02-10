@@ -10,7 +10,9 @@ const Data = ({time}) => {
 
     let styles = {
         backgroundColor: 'transparent',
-        color: (time && time.secondaryColor === '#ffffff'? '#000' : time && time.secondaryColor),
+        color: `${time.primaryColor}`,
+        fontWeight: '500',
+        marginBottom: '0'
     }
     
     const [data, setData] = useState(moment().format('llll'))
@@ -22,9 +24,12 @@ const Data = ({time}) => {
     }, [])
 
     return (
-        <div className = {`jumbotron ${s.data}`} style = {styles}>
+        <div className = {`${s.data}`} style = {styles}>
             {console.log(JSON.stringify(styles))}
-            <h2>{JSON.stringify(data).slice(1, -1)}</h2>
+            <p style = {styles}>
+              <i className="far fa-clock mr-3"></i>
+              {JSON.stringify(data).slice(1, -1)}
+            </p>
         </div>
     )
 }

@@ -21,3 +21,4 @@ export const SET_TIME_ERROR = 'SET_TIME_ERROR';
 export const SET_VISIBLE = 'SET_VISIBLE';
 export const CLOSE_VISIBLE = 'CLOSE_VISIBLE';
 export const SET_JOGO = 'SET_JOGO';
+export const CLEAR_REMINDER = 'CLEAR_REMINDER';

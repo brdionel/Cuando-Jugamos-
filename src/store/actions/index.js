@@ -2,14 +2,16 @@ import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS,SET_TIME_SUCCESS, SET_TIME_ERR
      CREATE_REMINDER_ERROR, READ_JOGOS, READ_REMINDERS_ERROR, READ_REMINDERS, CLOSE_VISIBLE,
      READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, CANCEL_CREATE_REMINDER, SET_VISIBLE,
      UPDATE_NEXT_JOGO, READ_JOGOS_SUCCESS, SET_DATE, READ_TIMES_SUCCESS, SET_TIME,
-     READ_JOGOS_ERROR, SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS, SET_JOGO} from '../types';
+     READ_JOGOS_ERROR, SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS, SET_JOGO, CLEAR_REMINDER} from '../types';
     
 import axios from 'axios';
-
+// import {useFetch} from '../../hooks/useFetch'
+const URL_BASE = "https://cuando-jugamos.herokuapp.com"
 const reminders = [
     // {
     //     id:1,
-    //     reminder:'Examen JavaScript',
+    //     title:'Examen JavaScript'
+    //     reminder: ''      
     //     fecha:'Sat Nov 15 2020 00:20:15 GMT-0500',
     //     color:'#21c236'
 
@@ -44,7 +46,7 @@ export function readJogos() {
       dispatch({
         type: READ_JOGOS
       })
-      const response = await axios.get('http://localhost:8000/jogos');
+      const response = await axios.get(`${URL_BASE}/jogos`);
       setTimeout(() => {
         dispatch({
           type: READ_JOGOS_SUCCESS,
@@ -72,7 +74,7 @@ export function readJogosById(id) {
             dispatch({
                 type: READ_JOGOS
             })
-            const response = await axios.get(`http://localhost:8000/jogos/${id}`);
+            const response = await axios.get(`${URL_BASE}/jogos/${id}`);
             setTimeout(() => {
                 dispatch({
                     type: READ_JOGOS_SUCCESS,
@@ -95,7 +97,8 @@ export function readJogosById(id) {
 export function readTimes() {
     return async function(dispatch){
         try{
-            const response = await axios.get(`http://localhost:8000/times`);
+            const response = await axios.get(`${URL_BASE}/times`);
+            console.log(response)
             dispatch({
                 type: READ_TIMES_SUCCESS,
                 payload: response.data.times
@@ -119,7 +122,7 @@ export function selectTime(idTime){
             dispatch({
                 type: SET_TIME,
             })
-            const response = await axios.get(`http://localhost:8000/times/${idTime}`);
+            const response = await axios.get(`${URL_BASE}/times/${idTime}`);
             dispatch({
                 type: SET_TIME_SUCCESS,
                 payload: response.data
@@ -265,4 +268,10 @@ export function selectJogo(id) {
         payload: id
     })
 } 
+}
+
+export function clearReminder() {
+  return {
+    type: CLEAR_REMINDER
+  }
 }

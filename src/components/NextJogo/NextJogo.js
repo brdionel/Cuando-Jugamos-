@@ -1,13 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
-import AOS from 'aos'
 
 import s from './NextJogo.module.css'
-
-AOS.init ({ 
-  delay : 1000 ,  // valores de 0 a 3000 , con un paso de 50 ms de 
-}) ;
 
 const NextJogo = ({nextJogo, time}) => {
     
@@ -23,7 +18,7 @@ const NextJogo = ({nextJogo, time}) => {
   return (
     <div>
       {(diasProJogo !== null)
-        ? <div className="jumbotron text-white text-center" style = { styles } data-aos="fade-left">
+        ? <div className="jumbotron text-white text-center" style = { styles } >
             { (moment(hoje).format('DD/MM/YYYY') === moment(prox).format('DD/MM/YYYY'))
               ? 
                 <p className="lead">

@@ -12,14 +12,15 @@ const ModalTime = ({visible, times, selectTime, closeVisible, readTimes, time })
   const [inputSelect, setInputSelect] = useState('')
 
   useEffect(() => { 
+    console.log('readtimes')
     readTimes()
   }, []);
 
-  const showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
+  // const showModal = () => {
+  //   this.setState({
+  //     visible: true,
+  //   });
+  // };
 
   const handleOk = e => {
     if(inputSelect){

@@ -2,7 +2,7 @@ import { CREATE_REMINDER, CREATE_REMINDER_SUCCESS, CREATE_REMINDER_ERROR, SET_TI
     SET_TIME_ERROR, READ_REMINDERS, READ_REMINDERS_ERROR, READ_REMINDERS_SUCCESS, LOAD_CREATE_REMINDER, 
     UPDATE_NEXT_JOGO, CANCEL_CREATE_REMINDER, READ_JOGOS_ERROR, READ_JOGOS_SUCCESS, SET_TIME,
     SET_REMINDER, SHOW_DETAILS, CLOSE_DETAILS, SET_DATE, READ_TIMES_SUCCESS, READ_JOGOS, SET_VISIBLE,
-    CLOSE_VISIBLE, SET_JOGO } from '../types';
+    CLOSE_VISIBLE, SET_JOGO, CLEAR_REMINDER } from '../types';
 
 import moment from 'moment'
 
@@ -87,7 +87,8 @@ export default (state=init, action)=>{
         return {
             ...state,
             creating:false,
-            loading:true
+            loading:true,
+            reminder: {}
         }
 
 
@@ -108,14 +109,14 @@ export default (state=init, action)=>{
         case LOAD_CREATE_REMINDER:
             return {
                 ...state,
-                showDetails: state.showDetails && false,
                 creating: true
             }
 
         case CANCEL_CREATE_REMINDER:
             return {
                 ...state,
-                creating: false
+                creating: false,
+                reminder: {}
             }
         
         case UPDATE_NEXT_JOGO:
@@ -125,6 +126,7 @@ export default (state=init, action)=>{
             }
 
         case SET_REMINDER: 
+        console.log('llega al reducer con el payload: '+ JSON.stringify(action.payload))
             return {
                 ...state,
                 reminder: action.payload
@@ -169,6 +171,12 @@ export default (state=init, action)=>{
             return {
               ...state,
               reminder: jogo
+            }
+
+        case CLEAR_REMINDER:
+            return {
+              ...state,
+              reminder: {}
             }
 
         default: return state;

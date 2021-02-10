@@ -7,7 +7,6 @@ import { Avatar, Badge } from 'antd';
 import moment from 'moment';
 import { Spin, Icon } from 'antd';
 import { selectReminder, showDetails } from '../../store/actions';
-import { animateScroll as scroll} from 'react-scroll';
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
@@ -27,15 +26,18 @@ const remindersOnDay = (reminders, currentDay) => {
     return remindersOnDay;
 }
 
+const truncateText = (text) => text.length > 40? `${text.slice(0, 30)}...` : text
+     
+
 const Day = ({ reminders, currentDay, loading, selectReminder, showDetails, time }) => {
 
   const RemindersOnDay = remindersOnDay(reminders, currentDay);
-    const scrollType = {
-      duration: 700,
-      delay: 500,
-      smooth: true, // linear "easeInQuint" "easeOutCubic" https://easings.net/es
-      // offset: 50,
-    };
+    // const scrollType = {
+    //   duration: 700,
+    //   delay: 500,
+    //   smooth: true, // linear "easeInQuint" "easeOutCubic" https://easings.net/es
+    //   // offset: 50,
+    // };
 
   // const handleShow = (item) => {
   //   electReminder(item)s
@@ -47,10 +49,22 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails, time
   ? time.primaryColor 
   : time.secondaryColor
 
+  const styleDay= {
+    backgroundColor: `${currentDay < moment().subtract(1, "days")? `#eee`: 'transparent'}`,
+    borderRadius: '.5em',
+    opacity: `${currentDay< moment().subtract(1, "days")? `.8`: '1'}`
+  } 
+
+  const handleClickReminder = item => {
+    // e.stopPropagation();
+    console.log('click en reminder')
+    console.log(item);
+    selectReminder(item)
+  }
 
   return (
-    <>
-      {!loading ? <ul className="events p-0">
+    <div> 
+      {!loading ? <ul className="events p-0" style= {styleDay}>
         {RemindersOnDay.map(item => 
           { if(item.idLocal) {
             return (
@@ -66,10 +80,12 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails, time
               )
             }
             else return (
-              <li key={item.id + item.reminder} className = {styles.wrapperReminder}>
+              <li key={item.id + item.reminder}>
                 <Badge 
                   color={color} 
-                  text={item.reminder} 
+                  text={item.title? truncateText(item.title) : truncateText(item.reminder)} 
+                  onClick={() => handleClickReminder(item)}
+                  className = {styles.wrapperReminder} 
                 />
               </li>
             )
@@ -78,7 +94,7 @@ const Day = ({ reminders, currentDay, loading, selectReminder, showDetails, time
     </ul> 
     : <Spin indicator={antIcon} />
     }
-    </>
+    </div>
   );
 }
 

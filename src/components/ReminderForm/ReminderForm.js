@@ -3,16 +3,21 @@ import { connect } from "react-redux";
 import { Input, DatePicker, Button } from "antd";
 import styles from "./ReminderForm.module.css";
 import { cancelCreateReminder, createReminder, setDate } from "../../store/actions";
+
+const { TextArea } = Input;
  
 const ReminderForm = (props) => {
-  const { date, setDate, cancelCreateReminder, createReminder} = props;
-  const [reminder, setReminder] = useState('') 
-
+  const { date, setDate, cancelCreateReminder, createReminder, reminderSelected} = props;
+  const [newReminder, setNewReminder] = useState(reminderSelected.reminder) 
+  const [title, setTitle] = useState(reminderSelected.title) 
+  
   const onSubmit = (e) => {
     e.preventDefault();
     const newObject = {
-      reminder, 
-      fecha : date
+      title,
+      reminder: newReminder, 
+      fecha : date,
+      done: false
     }
     createReminder(newObject)
   }
@@ -24,16 +29,31 @@ const ReminderForm = (props) => {
   return (
     <form onSubmit = {onSubmit} className = {`${styles.wrapperReminderForm} mb-5`}>
       <div className = 'd-flex justify-content-between mb-4'>
-        <h4>Añadir nuevo recordatorio</h4>
+        <h4>
+          {!reminderSelected.fecha && 'Añadir nuevo' } recordatorio
+        </h4>
         <Button onClick = {handleClose}> X </Button>
       </div>
-      <div class="form-row">
-        <div class="form-group col">
+      <div className="form-row">
+        <div className="form-group col">
           <Input 
-            placeholder="Recordatorio"
-            value = {reminder}
-            onChange = { e => setReminder(e.target.value)}
+            placeholder="Título"
+            value = {reminderSelected.title? reminderSelected.title: title}
+            onChange = { e => setTitle(e.target.value)}
             size="large" 
+          /> 
+        </div>
+      </div>
+      <div className="form-row">
+        <div className="form-group col">
+          <TextArea 
+            placeholder="Recordatorio"
+            value = {reminderSelected.reminder? reminderSelected.reminder : newReminder}
+            onChange = { e => setNewReminder(e.target.value)}
+            rows= {3}
+            showCount 
+            maxLength={100} 
+            allowClear
           /> 
         </div>
       </div>
@@ -64,7 +84,8 @@ const ReminderForm = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    date: state.date
+    date: state.date,
+    reminderSelected: state.reminder
   }
 }
 
